@@ -21,6 +21,20 @@ from rest_framework.decorators import api_view # type: ignore
 from rest_framework.response import Response # type: ignore
 from rest_framework import status # type: ignore
 from django.db.models import Case, When, Value, IntegerField
+from django.utils import timezone  # Ensure timezone is imported
+from django.http import HttpResponse, HttpResponseRedirect  # Import HttpResponseRedirect
+from django.urls import reverse
+from .utils import complete_water_consumption_period  # Import the renamed function
+
+
+def finish_water_consumption_period_view(request, contract_id):
+    # Use the renamed utility function to avoid conflict
+    result_message = complete_water_consumption_period(contract_id)
+    print(result_message)  # For debugging
+
+    # Redirect or return response as needed
+    return HttpResponseRedirect(reverse('contract_list'))
+
 
 # VAT Views
 def vat_list(request):
@@ -136,9 +150,6 @@ def update_reading(request):
         return Response({'error': 'Watermeter not found'}, status=status.HTTP_404_NOT_FOUND)
     except KeyError:
         return Response({'error': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-from django.utils import timezone  # Ensure timezone is imported
 
 def finish_contract(request, contract_id):
     contract = get_object_or_404(Contract, pk=contract_id)
