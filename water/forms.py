@@ -88,16 +88,21 @@ class WatermeterPlaceForm(forms.ModelForm):
         )
 
 
+# In forms.py
 class ContractForm(forms.ModelForm):
     products = forms.ModelMultipleChoiceField(
         queryset=Product.objects.all(),
         widget=forms.CheckboxSelectMultiple,  # Allow multi-select of products
         required=False  # Allow no products to be selected
     )
+    provider = forms.ModelChoiceField(
+        queryset=Provider.objects.all(),
+        required=False  # Allow no provider to be selected
+    )
 
     class Meta:
         model = Contract
-        fields = ['customer', 'watermeters_places', 'contract_start_day', 'contract_end_day']
+        fields = ['customer', 'watermeters_places', 'contract_start_day', 'contract_end_day', 'provider']
         widgets = {
             'contract_start_day': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'contract_end_day': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
@@ -105,7 +110,7 @@ class ContractForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['contract_start_day'].initial = timezone.now()
+        self.fields['contract_start_day'].initial = timezone.now()  # Initialize contract_start_day with current datetime
         
         # Dynamically create price fields for each product
         for product in Product.objects.all():
@@ -116,6 +121,7 @@ class ContractForm(forms.ModelForm):
             )
 
     def save(self, commit=True):
+        # Save the main contract form and associated products with individual prices
         contract = super().save(commit=False)
         if commit:
             contract.save()
@@ -123,7 +129,7 @@ class ContractForm(forms.ModelForm):
             
             # Save the prices for each selected product
             for product in selected_products:
-                price_field_name = f'price_{product.id}'
+                price_field_name = f'price_{product.product_id}'
                 individual_price = self.cleaned_data[price_field_name]
 
                 # Save to ProductContract
@@ -133,6 +139,7 @@ class ContractForm(forms.ModelForm):
                     individual_price=individual_price
                 )
         return contract
+
 
 
 class ProductContractForm(forms.ModelForm):

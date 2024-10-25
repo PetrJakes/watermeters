@@ -1,3 +1,4 @@
+<!-- In contract_add.html -->
 {% extends "water/base.html" %}
 
 {% block title %}Add New Contract{% endblock %}
@@ -36,12 +37,17 @@
             </div>
         </div>
 
-        <!-- Container for Contract Start Day -->
+        <!-- Container for Contract Start Day and Provider dropdown -->
         <div style="margin-top: 20px;">
             <div>
                 <!-- Label for Contract Start Day -->
                 <label for="id_contract_start_day">Contract Start Day</label>
                 {{ contract_form.contract_start_day }}
+            </div>
+            <div>
+                <!-- Label for Provider -->
+                <label for="id_provider">Provider</label>
+                {{ contract_form.provider }}
             </div>
         </div>
 

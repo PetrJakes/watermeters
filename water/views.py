@@ -203,16 +203,20 @@ def active_contracts(request):
     })
 
 
+# In views.py
 def contract_list(request):
     # Annotate to ensure contracts without 'contract_end_day' come first, then sort by 'contract_start_day' descending
-    contracts = Contract.objects.annotate(
+    contracts = Contract.objects.select_related('provider').annotate(
         is_active=Case(
             When(contract_end_day__isnull=True, then=Value(1)),
             default=Value(0),
             output_field=IntegerField()
         )
     ).order_by('-is_active', '-contract_start_day')
+
     return render(request, 'water/contract_list.html', {'contracts': contracts})
+
+
 
 ProductContractFormSet = inlineformset_factory(
     Contract,
