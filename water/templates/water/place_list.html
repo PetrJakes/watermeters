@@ -1,0 +1,42 @@
+{% extends "water/base.html" %}
+
+{% block title %}Places{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Place List</h2>
+
+    <!-- Add New Place Button -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'add_place' %}" 
+           style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+           Add New Place
+        </a>
+    </div>
+
+    <!-- Place Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Place Name</th>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Address</th>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">City</th>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for place in places %}
+                <tr>
+                    <td style="border: 1px solid black; padding: 10px;">{{ place.place_name }}</td>
+                    <td style="border: 1px solid black; padding: 10px;">{{ place.street }} {{ place.street_no }}</td>
+                    <td style="border: 1px solid black; padding: 10px;">{{ place.city }}</td>
+                    <td style="border: 1px solid black; padding: 10px;">
+                        <a href="{% url 'edit_place' place.place_id %}">Edit</a>
+                        <a href="{% url 'delete_place' place.place_id %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

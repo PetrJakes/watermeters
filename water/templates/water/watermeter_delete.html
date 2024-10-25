@@ -1,0 +1,17 @@
+<!-- water/templates/water/delete_watermeter.html -->
+{% extends 'water/base.html' %}
+
+{% block title %}Delete Water Meter{% endblock %}
+
+{% block content %}
+<h1>Delete Water Meter</h1>
+
+<p>Are you sure you want to delete "{{ watermeter.sn }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm Deletion</button>
+</form>
+
+<a href="{% url 'watermeter_list' %}">Cancel</a>
+{% endblock %}

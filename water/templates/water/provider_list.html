@@ -1,0 +1,42 @@
+{% extends 'water/base.html' %}
+
+{% block title %}Provider List{% endblock %}
+
+{% block content %}
+    <div style="padding: 20px;">
+        <h2>Provider List</h2>
+
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'add_provider' %}" 
+               style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+               Add New Provider
+            </a>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Provider Name</th>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for provider in providers %}
+                    <tr>
+                        <td style="border: 1px solid black; padding: 10px;">{{ provider.name }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">
+                            <a href="{% url 'edit_provider' provider.pk %}">Edit</a>
+                            <a href="{% url 'delete_provider' provider.pk %}">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2" style="border: 1px solid black; padding: 10px; text-align: center;">
+                            No provider records available.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

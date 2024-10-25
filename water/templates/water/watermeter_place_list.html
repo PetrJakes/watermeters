@@ -1,0 +1,47 @@
+{% extends "water/base.html" %}
+
+{% block title %}Watermeter and Place Connections{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Watermeter and Place Connections</h2>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 10px;">Watermeter</th>
+                <th style="border: 1px solid black; padding: 10px;">Place</th>
+                <th style="border: 1px solid black; padding: 10px;">Contract</th>
+                <th style="border: 1px solid black; padding: 10px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in connections %}
+            <tr>
+                <td style="border: 1px solid black; padding: 10px;">{{ entry.watermeter_place.watermeter.sn }}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{ entry.watermeter_place.place.place_name }}</td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    {% if entry.contract %}
+                        {{ entry.contract.customer.family_name }} ({{ entry.contract.contract_start_day|date:"d.m.Y" }})
+                    {% else %}
+                        No Contract
+                    {% endif %}
+                </td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <a href="{% url 'edit_watermeter_place' entry.watermeter_place.watermeters_places_id %}">Edit</a> |
+                    <a href="{% url 'delete_watermeter_place' entry.watermeter_place.watermeters_places_id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add New Connection Button -->
+    <div style="margin-top: 20px;">
+        <a href="{% url 'add_watermeter_place' %}" 
+           style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+           Add New Connection
+        </a>
+    </div>
+</div>
+{% endblock %}

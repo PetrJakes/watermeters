@@ -1,0 +1,41 @@
+{% extends "water/base.html" %}
+
+{% block title %}Edit Water Meter{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Edit Water Meter</h2>
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.non_field_errors }} <!-- Display any non-field errors -->
+
+            <div class="form-group">
+                <label for="{{ form.sn.id_for_label }}">Serial Number (SN):</label>
+                {{ form.sn }} <!-- Render the form field directly -->
+                {{ form.sn.errors }} <!-- Display field-specific errors -->
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.mbus_adr.id_for_label }}">MBus Address:</label>
+                {{ form.mbus_adr }} <!-- Render the form field directly -->
+                {{ form.mbus_adr.errors }} <!-- Display field-specific errors -->
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.recent_reading.id_for_label }}">Recent Reading:</label>
+                {{ form.recent_reading }} <!-- Render the form field directly -->
+                {{ form.recent_reading.errors }} <!-- Display field-specific errors -->
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.date_of_recent_reading.id_for_label }}">Date of Recent Reading:</label>
+                {{ form.date_of_recent_reading }} <!-- Render the form field directly -->
+                {{ form.date_of_recent_reading.errors }} <!-- Display field-specific errors -->
+            </div>
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

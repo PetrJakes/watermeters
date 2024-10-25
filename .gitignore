@@ -1,0 +1,5 @@
+# Ignore the virtual environment directory
+venv/
+
+# Ignore the system trash directory
+.Trash-1000/

@@ -1,0 +1,70 @@
+{% extends "water/base.html" %}
+
+{% block title %}Edit Contract{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Edit Contract</h2>
+    
+    <!-- Display form errors if there are any -->
+    {% if contract_form.errors %}
+    <div class="form-errors">
+        <ul>
+        {% for field, errors in contract_form.errors.items %}
+            <li><strong>{{ field }}:</strong> {{ errors }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <h3>Contract Details</h3>
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <div>
+                <label for="id_customer">Customer</label>
+                {{ contract_form.customer }}
+            </div>
+            <div>
+                <label for="id_watermeters_places">Place</label>
+                {{ contract_form.watermeters_places }}
+            </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <label for="id_contract_start_day">Contract Start Day</label>
+            {{ contract_form.contract_start_day }}
+        </div>
+
+        <h3>Products</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product, price_field in product_price_fields %}
+                <tr>
+                    <td>
+                        <!-- Correctly handle product selection and check if the product ID is in selected_products -->
+                        <input type="checkbox" name="products" value="{{ product.product_id }}" 
+                               {% if product.product_id in selected_products %}checked{% endif %}>
+                    </td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ price_field }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Contract Start Reading</h3>
+        {{ water_consumption_form.as_p }}
+
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

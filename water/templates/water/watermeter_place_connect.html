@@ -1,0 +1,16 @@
+{% extends "water/base.html" %}
+
+{% block title %}Connect Water Meter to Place{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Connect Water Meter to Place</h2>
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Connect</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

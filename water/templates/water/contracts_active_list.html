@@ -1,0 +1,108 @@
+{% extends "water/base.html" %}  <!-- Extending base.html to include the top menu -->
+
+{% block title %}
+    Active Contracts
+{% endblock %}
+
+{% block content %}
+<style>
+    /* Table container for padding and centering */
+    .table-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+
+    /* Center align headers */
+    th {
+        background-color: #007BFF;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        white-space: normal;  /* Allow normal wrapping */
+        word-wrap: break-word; /* Break words at word boundaries */
+    }
+
+    /* Align specific columns to the right */
+    .align-right {
+        text-align: right;
+    }
+
+    /* Align Nájemce to the left */
+    .align-left {
+        text-align: left;
+    }
+
+    /* Make columns narrower and break text */
+    .narrow-column {
+        width: 100px;
+        word-break: break-word; /* Break at word boundaries */
+        text-align: center; /* Center text in narrow columns */
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #e9f4fb;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 768px) {
+        th, td {
+            padding: 8px 10px;
+        }
+    }
+</style>
+
+<div class="table-container">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th class="narrow-column">Nájemce</th>
+                <th class="narrow-column">Odběrní místo</th>
+                <th class="narrow-column">Počáteční stav</th>
+                <th class="narrow-column">Počáteční stav <br>(m³)</th>
+                <th class="narrow-column">Koncový stav</th>
+                <th class="narrow-column">Koncový stav <br>(m³)</th>
+                <th class="narrow-column">Spotřeba <br>(m³)</th> <!-- Consumption -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in contracts %}
+            <tr>
+                <td class="align-left">{{ entry.contract.customer.family_name }}</td>
+                <td class="align-left">{{ entry.contract.watermeters_places.place.place_name }}</td>
+                <td style="text-align: center;">{{ entry.start_detail.reading_datetime|date:"d.m.Y" }}</td>
+                <td class="align-right">{{ entry.start_detail.reading_value|floatformat:3 }}</td>  <!-- Počáteční stav (m³) formatted -->
+                <td style="text-align: center;">{{ entry.pending_detail.reading_datetime|date:"d.m.Y" }}</td>
+                <td class="align-right">{{ entry.pending_detail.reading_value|floatformat:3 }}</td>  <!-- Koncový stav (m³) formatted -->
+                <td class="align-right">
+                    {% if entry.difference is not None %}
+                        {{ entry.difference|floatformat:3 }}  <!-- Spotřeba (m³) formatted -->
+                    {% else %}
+                        0.000
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>   
+</div>
+{% endblock %}

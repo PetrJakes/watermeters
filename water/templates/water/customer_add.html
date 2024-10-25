@@ -1,0 +1,32 @@
+<form method="post">
+    {% csrf_token %}
+
+    <!-- Render the contract form -->
+    <h3>Contract Details</h3>
+    {{ contract_form.as_p }}
+
+    <!-- Render the product contract formset -->
+    <h3>Products and Individual Prices</h3>
+    {{ product_contract_formset.management_form }}  <!-- Important for formset management -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Individual Price</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in product_contract_formset %}
+                <tr>
+                    <td>{{ form.product }}</td>  <!-- Render the product field -->
+                    <td>{{ form.individual_price }}</td>  <!-- Render the individual price field -->
+                    <td>{{ form.DELETE }}</td>  <!-- Render the delete checkbox for the formset -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="submit">Save Contract</button>
+</form>

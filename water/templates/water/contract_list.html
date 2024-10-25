@@ -1,0 +1,51 @@
+{% extends "water/base.html" %}
+
+{% block title %}Contract List{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Contract List</h2>
+
+    <!-- Add New Contract Button at the top -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'add_contract' %}" 
+           style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+           Add New Contract
+        </a>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 10px;">Customer</th>
+                <th style="border: 1px solid black; padding: 10px;">Watermeter - Place</th>
+                <th style="border: 1px solid black; padding: 10px;">Contract Start Day</th>
+                <th style="border: 1px solid black; padding: 10px;">Contract End Day</th>
+                <th style="border: 1px solid black; padding: 10px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contract in contracts %}
+            <tr>
+                <td style="border: 1px solid black; padding: 10px;">{{ contract.customer }}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{ contract.watermeters_places }}</td>
+                <td style="border: 1px solid black; padding: 10px;">{{ contract.contract_start_day|date:"d.m.Y" }}</td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    {% if contract.contract_end_day %}
+                        {{ contract.contract_end_day|date:"d.m.Y" }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td style="border: 1px solid black; padding: 10px;">
+                    <a href="{% url 'edit_contract' contract.contract_id %}">Edit</a> |
+                    {% if not contract.contract_end_day %}
+                        <a href="{% url 'finish_contract' contract.contract_id %}">Finish</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

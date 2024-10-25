@@ -1,0 +1,16 @@
+{% extends "water/base.html" %}
+
+{% block title %}Edit Place{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Edit Place</h2>
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Dynamically renders all form fields inside <p> tags -->
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

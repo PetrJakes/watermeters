@@ -1,0 +1,14 @@
+<!-- water/templates/water/add_place.html -->
+{% extends 'water/base.html' %}
+
+{% block title %}Add Place{% endblock %}
+
+{% block content %}
+<h2>Add Place</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'place_list' %}">Back to Places</a>
+{% endblock %}

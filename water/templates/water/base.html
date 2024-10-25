@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django Application{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+    <!-- Navigation Menu -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'place_list' %}">Places</a></li>
+            <li><a href="{% url 'watermeter_list' %}">Water Meters</a></li>
+            <li><a href="{% url 'customer_list' %}">Customers</a></li>
+            <li><a href="{% url 'watermeter_place_list' %}">Watermeters Places</a></li>
+            <li><a href="{% url 'contract_list' %}">Contracts</a></li>  
+            <li><a href="{% url 'contracts_active_list' %}">Active Contracts</a></li>
+            
+            <!-- New Menu Items for VAT, Providers, and Products -->
+            <li><a href="{% url 'vat_list' %}">VATs</a></li>
+            <li><a href="{% url 'provider_list' %}">Providers</a></li>
+            <li><a href="{% url 'product_list' %}">Products</a></li>
+        </ul>
+    </nav>
+
+    <div class="content-container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

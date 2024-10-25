@@ -1,0 +1,14 @@
+<!-- water/templates/water/customer_confirm_delete.html -->
+{% extends 'water/base.html' %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block content %}
+    <h1>Delete Customer</h1>
+    <p>Are you sure you want to delete {{ customer.first_name }} {{ customer.family_name }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+    </form>
+    {% endblock %}
+

@@ -1,0 +1,12 @@
+
+        {% extends 'water/base.html' %}
+        {% block title %}Delete Product{% endblock %}
+        {% block content %}
+            <h2>Delete Product</h2>
+            <p>Are you sure you want to delete {{ product }}?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">Confirm</button>
+            </form>
+        {% endblock %}
+    

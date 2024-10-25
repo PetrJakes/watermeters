@@ -1,0 +1,45 @@
+<!-- water/templates/water/contract_finish.html -->
+{% extends "water/base.html" %}
+
+{% block title %}Finish Contract{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Finish Contract for {{ contract.customer }}</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Contract End Form -->
+        <div class="form-group">
+            {{ finish_contract_form.contract_end_day.label_tag }}
+            {{ finish_contract_form.contract_end_day }}
+            {% if finish_contract_form.contract_end_day.errors %}
+                <div class="error">
+                    {% for error in finish_contract_form.contract_end_day.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Pending Contract Detail Form -->
+        <h3>Pending Contract Detail</h3>
+
+        <!-- Reading Datetime Field -->
+        <div class="form-group">
+            {{ finish_contract_form.reading_value.label_tag }}
+            {{ finish_contract_form.reading_value }}
+            {% if finish_contract_form.reading_value.errors %}
+                <div class="error">
+                    {% for error in finish_contract_form.reading_value.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Finish Contract</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'water/base.html' %}
+
+{% block title %}Product List{% endblock %}
+
+{% block content %}
+    <div style="padding: 20px;">
+        <h2>Product List</h2>
+
+        <!-- Add New Product Button -->
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'add_product' %}" 
+               style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+               Add New Product
+            </a>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Product Name</th>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">DPH</th>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Price</th> <!-- Added price column -->
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td style="border: 1px solid black; padding: 10px;">{{ product.description }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{ product.vat }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{ product.price }}</td> <!-- Display the price here -->
+                        <td style="border: 1px solid black; padding: 10px;">
+                            <a href="{% url 'edit_product' product.pk %}">Edit</a>
+                            <a href="{% url 'delete_product' product.pk %}">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" style="border: 1px solid black; padding: 10px; text-align: center;">
+                            No product records available.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

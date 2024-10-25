@@ -1,0 +1,16 @@
+{% extends "water/base.html" %}
+
+{% block title %}Edit Customer{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Edit Customer</h2>
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Dynamically render the form -->
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

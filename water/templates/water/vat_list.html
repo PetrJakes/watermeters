@@ -1,0 +1,44 @@
+{% extends 'water/base.html' %}
+
+{% block title %}VAT List{% endblock %}
+
+{% block content %}
+    <div style="padding: 20px;">
+        <h2>VAT List</h2>
+
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'add_vat' %}" 
+               style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+               Add New VAT
+            </a>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Value</th>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">VAT Coefficient</th>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vat in vats %}
+                    <tr>
+                        <td style="border: 1px solid black; padding: 10px;">{{ vat.value }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{ vat.vat_koeficient }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">
+                            <a href="{% url 'edit_vat' vat.pk %}">Edit</a>
+                            <a href="{% url 'delete_vat' vat.pk %}">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" style="border: 1px solid black; padding: 10px; text-align: center;">
+                            No VAT records available.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

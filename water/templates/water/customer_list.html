@@ -1,0 +1,40 @@
+{% extends 'water/base.html' %}
+
+{% block title %}Customers{% endblock %}
+
+{% block content %}
+    <div style="padding: 20px;">
+        <h2>Customer List</h2>
+
+        <!-- Add New Customer Button -->
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'add_customer' %}" 
+               style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+               Add New Customer
+            </a>
+        </div>
+
+        <!-- Customer Table -->
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Family Name</th>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">First Name</th>
+                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                    <tr>
+                        <td style="border: 1px solid black; padding: 10px;">{{ customer.family_name }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">{{ customer.first_name }}</td>
+                        <td style="border: 1px solid black; padding: 10px;">
+                            <a href="{% url 'edit_customer' customer.pk %}">Edit</a>
+                            <a href="{% url 'delete_customer' customer.pk %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
