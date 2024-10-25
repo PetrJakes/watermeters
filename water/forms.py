@@ -104,8 +104,13 @@ class ContractForm(forms.ModelForm):
         model = Contract
         fields = ['customer', 'watermeters_places', 'contract_start_day', 'contract_end_day', 'provider']
         widgets = {
-            'contract_start_day': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-            'contract_end_day': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'contract_start_day': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
+            'contract_end_day': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
+            
+            #'contract_start_day': forms.DateTimeInput(format='%d.%m.%Y %H:%M', attrs={'type': 'datetime-local'}),
+            #'contract_start_day': forms.DateTimeInput(format='%d.%m.%Y %H:%M', attrs={'type': 'datetime-local'}),
+            #'contract_start_day': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            #'contract_end_day': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
 
     def __init__(self, *args, **kwargs):

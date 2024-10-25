@@ -1,32 +1,19 @@
-<form method="post">
-    {% csrf_token %}
-
-    <!-- Render the contract form -->
-    <h3>Contract Details</h3>
-    {{ contract_form.as_p }}
-
-    <!-- Render the product contract formset -->
-    <h3>Products and Individual Prices</h3>
-    {{ product_contract_formset.management_form }}  <!-- Important for formset management -->
-
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Individual Price</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for form in product_contract_formset %}
-                <tr>
-                    <td>{{ form.product }}</td>  <!-- Render the product field -->
-                    <td>{{ form.individual_price }}</td>  <!-- Render the individual price field -->
-                    <td>{{ form.DELETE }}</td>  <!-- Render the delete checkbox for the formset -->
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <button type="submit">Save Contract</button>
-</form>
+{% extends 'water/base.html' %}
+{% block title %}Add Customer{% endblock %}
+{% block content %}
+    <h2>Add Customer</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.customer_id }}
+        {{ form.first_name.label_tag }} {{ form.first_name }}
+        {{ form.family_name.label_tag }} {{ form.family_name }}
+        {{ form.street.label_tag }} {{ form.street }}
+        {{ form.street_no.label_tag }} {{ form.street_no }}
+        {{ form.city.label_tag }} {{ form.city }}
+        {{ form.zip.label_tag }} {{ form.zip }}
+        {{ form.email.label_tag }} {{ form.email }}
+        {{ form.phone.label_tag }} {{ form.phone }}
+        
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}
