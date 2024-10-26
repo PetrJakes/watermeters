@@ -10,23 +10,22 @@
 <body>
 
     <!-- Navigation Menu -->
-    <nav class="navbar">
-        <ul>
-            <li><a href="{% url 'place_list' %}">Places</a></li>
-            <li><a href="{% url 'watermeter_list' %}">Water Meters</a></li>
+    <nav class="navbar" style="margin-bottom: 0; padding-bottom: 0;">
+        <ul style="padding: 0; margin: 0; list-style-type: none;">
+            <!-- New Menu Items for VAT, Providers, and Products -->
+            <li><a href="{% url 'product_list' %}">Products</a></li>
+            <li><a href="{% url 'vat_list' %}">VATs</a></li>
             <li><a href="{% url 'customer_list' %}">Customers</a></li>
+            <li><a href="{% url 'provider_list' %}">Providers</a></li>            
+            <li><a href="{% url 'place_list' %}">Places</a></li>            
+            <li><a href="{% url 'watermeter_list' %}">Water Meters</a></li>            
             <li><a href="{% url 'watermeter_place_list' %}">Watermeters Places</a></li>
             <li><a href="{% url 'contract_list' %}">Contracts</a></li>  
             <li><a href="{% url 'contracts_active_list' %}">Active Contracts</a></li>
-            
-            <!-- New Menu Items for VAT, Providers, and Products -->
-            <li><a href="{% url 'vat_list' %}">VATs</a></li>
-            <li><a href="{% url 'provider_list' %}">Providers</a></li>
-            <li><a href="{% url 'product_list' %}">Products</a></li>
         </ul>
     </nav>
 
-    <div class="content-container">
+    <div class="content-container" style="margin-top: 0; padding-top: 0;">
         {% block content %}
         {% endblock %}
     </div>

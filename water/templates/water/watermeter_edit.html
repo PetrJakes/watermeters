@@ -1,0 +1,28 @@
+<!-- water/templates/water/watermeter_edit.html -->
+{% extends 'water/base.html' %}
+
+{% block title %}Edit Water Meter Connection{% endblock %}
+
+{% block content %}
+<div style="padding: 20px;">
+    <h2>Edit Water Meter Connection</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Render fields except Recent Reading -->
+        {{ form.watermeter.label_tag }} {{ form.watermeter }}
+        {{ form.place.label_tag }} {{ form.place }}
+
+        <!-- Recent Reading Field (Prefilled) -->
+        <div class="form-group">
+            <label for="recent_reading">Recent Reading</label>
+            {{ form.recent_reading }}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{% url 'watermeter_place_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

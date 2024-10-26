@@ -4,40 +4,48 @@
 {% block title %}Water Meters{% endblock %}
 
 {% block content %}
-    <div style="padding: 20px;">
-        <h2>Water Meter List</h2>
+<div style="padding: 20px;">
+    <h2>Water Meter List</h2>
 
-        <!-- Add New Water Meter Button -->
-        <div style="margin-bottom: 20px;">
-            <a href="{% url 'add_watermeter' %}" 
-               style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-               Add New Water Meter
-            </a>
-        </div>
-
-        <!-- Water Meter Table -->
-        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-            <thead>
-                <tr>
-                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Serial Number</th>
-                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">MBus Address</th>
-                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Recent Reading</th>
-                    <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for watermeter in watermeters %}
-                    <tr>
-                        <td style="border: 1px solid black; padding: 10px;">{{ watermeter.sn }}</td>
-                        <td style="border: 1px solid black; padding: 10px;">{{ watermeter.mbus_adr }}</td>
-                        <td style="border: 1px solid black; padding: 10px;">{{ watermeter.recent_reading }}</td>
-                        <td style="border: 1px solid black; padding: 10px;">
-                            <a href="{% url 'edit_watermeter' watermeter.watermeter_id %}">Edit</a>
-                            <a href="{% url 'delete_watermeter' watermeter.watermeter_id %}">Delete</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Add New Water Meter Button -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'add_watermeter' %}" 
+           style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+           Add New Water Meter
+        </a>
     </div>
+
+    <!-- Water Meter Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Serial Number</th>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">MBus Address</th>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Recent Reading</th>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Date of Recent Reading</th>
+                <th style="border: 1px solid black; padding: 10px; background-color: #f2f2f2;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for watermeter in watermeters %}
+                <tr>
+                    <td style="border: 1px solid black; padding: 10px;">{{ watermeter.sn }}</td>
+                    <td style="border: 1px solid black; padding: 10px;">{{ watermeter.mbus_adr }}</td>
+                    <td style="border: 1px solid black; padding: 10px;">{{ watermeter.recent_reading }}</td>
+                    <td style="border: 1px solid black; padding: 10px;">
+                        {% if watermeter.date_of_recent_reading %}
+                            {{ watermeter.date_of_recent_reading|date:"d.m.Y" }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td style="border: 1px solid black; padding: 10px;">
+                        <a href="{% url 'edit_watermeter' watermeter.watermeter_id %}">Edit</a> |
+                        <a href="{% url 'delete_watermeter' watermeter.watermeter_id %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

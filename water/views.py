@@ -423,20 +423,27 @@ def delete_contract(request, contract_id):
     return render(request, 'water/contract_delete.html', {'contract': contract})
 
 
-def watermeter_place_list(request):
-    # Query all watermeter places and annotate their associated contract, if any
-    watermeter_places = WatermetersPlaces.objects.prefetch_related('contract_set').all()
+# views.py
+from django.shortcuts import render
+from .models import WatermetersPlaces
 
-    # Prepare a list of watermeter places with their associated contract, if it exists
+def watermeter_place_list(request):
+    # Fetch all watermeter-place connections with related watermeter details
+    watermeter_places = WatermetersPlaces.objects.select_related('watermeter', 'place')
+
     connections = []
     for watermeter_place in watermeter_places:
-        contract = Contract.objects.filter(watermeters_places=watermeter_place).first()  # Get the associated contract, if any
+        watermeter = watermeter_place.watermeter
         connections.append({
             'watermeter_place': watermeter_place,
-            'contract': contract  # Contract can be None if there is no contract for that place
+            'watermeter_serial': watermeter.sn,
+            'place_name': watermeter_place.place.place_name,
+            'recent_reading': watermeter.recent_reading,
+            'date_of_recent_reading': watermeter.date_of_recent_reading,
         })
 
     return render(request, 'water/watermeter_place_list.html', {'connections': connections})
+
 
 
 def add_watermeter_place(request):
